@@ -6,16 +6,16 @@ import { DeployFunction } from "hardhat-deploy/types";
 import { Fantasia__factory } from "../typechain";
 
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
-  const { deployments, getUnnamedAccounts } = hre;
+  const { deployments, getNamedAccounts } = hre;
 
-  const [deployer] = await getUnnamedAccounts();
+  const { Deployer } = await getNamedAccounts();
 
   const tokenFactory = await ethers.getContractFactory(
     "Fantasia"
   );
 
   const token = await upgrades.deployProxy(tokenFactory, [
-    deployer,// Owner
+    Deployer,// Owner
     "pretendUri.com", // baseUri
     "Fantasia", // name
     "FAN", // symbol

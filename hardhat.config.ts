@@ -9,6 +9,7 @@ import "hardhat-deploy";
 import "solidity-coverage";
 import "@openzeppelin/hardhat-upgrades";
 import "@nomiclabs/hardhat-ethers";
+import "./tasks/verifyOnEtherscan"
 
 dotenv.config();
 
@@ -30,6 +31,10 @@ const config: HardhatUserConfig = {
     hardhat: {
       allowUnlimitedContractSize: true,
     },
+    arbitrumSepolia: {
+      url: process.env.ALCHEMY_URI || "",
+      accounts
+    }
   },
   gasReporter: {
     enabled: true,
@@ -37,9 +42,18 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      polygonMumbai: process.env.POLYGON_API_KEY || "",
-      polygon: process.env.POLYGON_API_KEY || ""
+      arbitrumSepolia: 'SGB9WXVY8X4R22V6XUMTEADA1GM7JVG51X'
     },
+    customChains: [
+      {
+          network: "arbitrumSepolia",
+          chainId: 421614,
+          urls: {
+              apiURL: "https://api-sepolia.arbiscan.io/api",
+              browserURL: "https://sepolia.arbiscan.io/",
+          },
+      },
+  ],
   },
   namedAccounts: {
     deployer: 0,
