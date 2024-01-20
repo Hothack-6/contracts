@@ -39,6 +39,9 @@ contract Fantasia is
     /// @dev InvalidTokenId throws when passing a token ID into a function that does not exist
     error InvalidTokenId();
 
+    /// @dev AlreadyClaimed throws when an account that already owns a token tries to mint
+    error AlreadyClaimed();
+
     //###########################
     //#### Modifiers ####
     modifier checkZeroAddress(address _walletAddress) {
@@ -78,6 +81,10 @@ contract Fantasia is
         uint256 amount,
         bytes memory data
     ) public onlyRole(ADMIN) {
+        uint256 balance = balanceOf(account, id);
+        if (balance > 0) {
+            revert AlreadyClaimed();
+        }
         _mint(account, id, amount, data);
     }
 
@@ -87,6 +94,11 @@ contract Fantasia is
         uint256[] memory amounts,
         bytes memory data
     ) public onlyRole(ADMIN) {
+        for (uint8 i = 0; i <= ids.length; i++) {
+            if (balanceOf(to, ids[i]) > 0) {
+                revert AlreadyClaimed();
+            }
+        }
         _mintBatch(to, ids, amounts, data);
     }
 
@@ -107,7 +119,9 @@ contract Fantasia is
         return _description;
     }
 
-    function _authorizeUpgrade(address newImplementation) internal override {}
+    function _authorizeUpgrade(
+        address newImplementation
+    ) internal override onlyRole(ADMIN) {}
 
     function supportsInterface(
         bytes4 interfaceId

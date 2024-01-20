@@ -10,6 +10,7 @@ import "solidity-coverage";
 import "@openzeppelin/hardhat-upgrades";
 import "@nomiclabs/hardhat-ethers";
 import "./tasks/verifyOnEtherscan"
+import "./tasks/upgradeContract"
 
 dotenv.config();
 
