@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
@@ -29,7 +29,7 @@ contract Fantasia is
     string private _description;
 
     /// @dev where the metadata will live
-    string baseUri;
+    string public baseUri;
 
     //################
     //#### ERRORS ####
@@ -95,9 +95,21 @@ contract Fantasia is
         return string.concat(baseUri, "/", tokenId.toString(), ".json");
     }
 
+    function name() external view virtual returns (string memory) {
+        return _name;
+    }
+
+    function symbol() external view virtual returns (string memory) {
+        return _symbol;
+    }
+
+    function description() external view virtual returns (string memory) {
+        return _description;
+    }
+
     function _authorizeUpgrade(address newImplementation) internal override {}
 
-        function supportsInterface(
+    function supportsInterface(
         bytes4 interfaceId
     )
         public

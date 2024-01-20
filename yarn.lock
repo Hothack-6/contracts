@@ -3837,7 +3837,7 @@ hardhat-tracer@^1.1.0-rc.6:
   dependencies:
     ethers "^5.6.1"
 
-hardhat@^2.10.1:
+hardhat@^2.16.1:
   version "2.19.4"
   resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.19.4.tgz#5112c30295d8be2e18e55d847373c50483ed1902"
   integrity sha512-fTQJpqSt3Xo9Mn/WrdblNGAfcANM6XC3tAEi6YogB4s02DmTf93A8QsGb8uR0KR8TFcpcS8lgiW4ugAIYpnbrQ==
